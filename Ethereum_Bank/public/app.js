@@ -113,10 +113,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (typeof window.ethereum !== 'undefined') {
         console.log('Metamask is installed!')
 
-        var accounts = await ethereum.request({ method: 'eth_requestAccounts' })
-        console.log(accounts);
+        // var accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+        // console.log(accounts);
 
-        myContract = new web3.eth.Contract(ContractABI, ContractAddress);
+        myContract = new web3.eth.contract(ContractABI, ContractAddress);
         console.log("contract is loaded", myContract);
 
 
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             console.log(depositeinput.value);
 
-            myContract.methods.deposite().send({from: address, value:depositeinput.value}, function(err, res) {
+            myContract.methods.deposite().send({from: address, value:depositeinput.value*10**18}, function(err, res) {
                 console.log(res);
             })
 
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
         withdrawbutton.addEventListener('click', () => {
 
-            myContract.methods.withdraw(withdrawinput.value).send({from: address}, function (err, res) {
+            myContract.methods.withdraw(withdrawinput.value*10**18).send({from: address}, function (err, res) {
                 console.log(res);
             })
 
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             myContract.methods.getbalance().call({from : address}, function (err,res) {
                 console.log(res);
-                balance.innerText = res;
+                balance.innerText = res/10**18;
             })
 
         });

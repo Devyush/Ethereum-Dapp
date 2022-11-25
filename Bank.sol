@@ -21,7 +21,7 @@ contract Bank {
     }
 
     function deposite() public payable returns(bool){
-        require(msg.value > 10 wei,"Please deposit atleast 10 wei.");
+        require(msg.value > 10 wei,"Please deposite atleast 10 wei.");
         userbalance[msg.sender] += msg.value;
         return true;
     }
